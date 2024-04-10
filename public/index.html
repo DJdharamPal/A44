@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Homepage</title>
+</head>
+<body>
+  <h1>Welcome to the homepage!</h1>
+  <div id="products"></div>
+  <div id="carts"></div>
+  <div id="users"></div>
+  <div id="order"></div>
+  <div id="comment"></div>
+  <script>
+    // Make AJAX requests to fetch data from backend API
+    fetch('/models/product')
+      .then(response => response.json())
+      .then(products => {
+        const productsList = products.map(product => `<li>${product.name}</li>`).join('');
+        document.getElementById('products').innerHTML = `<h2>Products:</h2><ul>${productsList}</ul>`;
+      });
+
+    fetch('/models/cart')
+      .then(response => response.json())
+      .then(carts => {
+        const cartsList = carts.map(cart => `<li>${cart.userId} - ${cart.total}</li>`).join('');
+        document.getElementById('carts').innerHTML = `<h2>Carts:</h2><ul>${cartsList}</ul>`;
+      });
+
+    fetch('/api/users')
+      .then(response => response.json())
+      .then(users => {
+        const usersList = users.map(user => `<li>${user.name} - ${user.email}</li>`).join('');
+        document.getElementById('users').innerHTML = `<h2>Users:</h2><ul>${usersList}</ul>`;
+      });
+  </script>
+</body>
+</html>
